@@ -215,13 +215,22 @@
 	<div class="hero-home-grid">
 		<div class="hero-home-copy">
 			<div class="hero-title-stack">
-				<h1 class="hero-event-title">{countdownTitle}</h1>
+				<h1 class="hero-event-title">
+					{#if countdownTitle === 'BEST TRAINING WEEK'}
+						<span class="hero-event-title-line hero-event-title-line--first">BEST</span>
+						<span class="hero-event-title-line">TRAINING WEEK</span>
+					{:else}
+						{countdownTitle}
+					{/if}
+				</h1>
 			</div>
 
 			<div class="hero-countdown-stack">
 				<p class="hero-event-date">{countdownDateLabel}</p>
 				<FlipCountdown {flipDigits} {prevFlipDigits} {flipVersions} />
 			</div>
+
+			<p class="hero-short-description">{eventInfo.description}</p>
 
 			<a
 				href="https://docs.google.com/forms/"
@@ -231,8 +240,6 @@
 			>
 				Register now
 			</a>
-
-			<p class="hero-short-description">{eventInfo.description}</p>
 		</div>
 		<div class="hero-tree-spacer" aria-hidden="true"></div>
 	</div>

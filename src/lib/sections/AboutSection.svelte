@@ -1,11 +1,20 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import Pumpkin from '../components/Pumpkin.svelte';
 </script>
 
 <section id="about" class="content-section">
-	<Pumpkin class="css-pumpkin--about1" />
-	<Pumpkin class="css-pumpkin--about2" />
+	<img
+		src={`${base}/images/material/pumpkin_i.webp`}
+		alt=""
+		aria-hidden="true"
+		class="decor-pumpkin css-pumpkin--about1"
+	/>
+	<img
+		src={`${base}/images/material/pumpkin_i.webp`}
+		alt=""
+		aria-hidden="true"
+		class="decor-pumpkin css-pumpkin--about2"
+	/>
 
 	<div class="section-heading">
 		<h2 class="section-title">About us</h2>
@@ -13,20 +22,27 @@
 	<div class="about-layout">
 		<div class="about-hero">
 			<img
-				src={`${base}/images/BESTies/BESTGroupPhoto.webp`}
+				src={`${base}/images/BESTies/BESTGroupPhoto.jpg`}
 				alt="BEST Brașov members"
 				class="about-hero-image"
+			/>
+			<img
+				src={`${base}/images/material/cornerstamp.webp`}
+				alt=""
+				aria-hidden="true"
+				class="about-cornerstamp"
 			/>
 		</div>
 		<div class="about-grid">
 			<div class="about-story">
 				<p class="about-copy">
-					BEST Brașov is a student-run non-profit organisation dedicated to developing students,
-					through educational involvement, complementary education and career support.
+					BEST Brașov is a student-run non-profit organisation, established in 1997,
+					dedicated to developing students, through educational involvement, complementary education
+					and career support.
 				</p>
 				<p class="about-copy">
-					BEST Training Week, now on its XIX-th edition brings together students and professionals
-					with the goal of covering areas of interest.
+					BEST Brașov comes to the aid of students through events organized for them, such as workshops, 
+					academic courses or company presentations, which cover the needs and interests of university students. 
 				</p>
 			</div>
 			<div class="stats-grid">

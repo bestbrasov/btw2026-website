@@ -1,6 +1,6 @@
 .hero-section {
 	position: relative;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .hero-overlay {
@@ -46,6 +46,14 @@
 	text-shadow:
 		0 10px 22px rgba(82, 40, 14, 0.12),
 		0 2px 0 rgba(255, 246, 233, 0.35);
+}
+
+.hero-event-title-line {
+	display: block;
+}
+
+.hero-event-title-line--first {
+	transform: translateX(-0.1ch);
 }
 
 .hero-countdown-stack {
@@ -106,11 +114,12 @@
 	position: absolute;
 	inset: 0;
 	pointer-events: none;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .hero-leaf-overlay {
-	z-index: 2;
+	inset: 0 0 -12rem 0;
+	z-index: 12;
 }
 
 .schedule-leaf-overlay {
@@ -156,11 +165,13 @@
 	align-items: center;
 	justify-content: center;
 	width: fit-content;
-	padding: 0.75rem 1.8rem;
+	margin-top: -0.25rem;
+	margin-left: 0.7rem;
+	padding: 0.95rem 2.2rem;
 	background: #5b351f;
 	color: #f7e7c8;
 	font-family: 'Oswald', sans-serif;
-	font-size: clamp(0.85rem, 1.6vw, 1rem);
+	font-size: clamp(0.95rem, 1.8vw, 1.12rem);
 	font-weight: 700;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
@@ -222,11 +233,10 @@
 	}
 
 	.hero-register-cta {
-		margin-top: 0.75rem;
-		margin-bottom: 0.5rem;
-		margin-left: 1.25rem;
-		padding: 1rem 2.4rem;
-		font-size: 1.05rem;
+		margin-top: 0.2rem;
+		margin-left: 0.9rem;
+		padding: 1.05rem 2.55rem;
+		font-size: 1.1rem;
 	}
 
 	.hero-short-description {
@@ -259,22 +269,6 @@
 
 	.hero-title-stack {
 		gap: 1.2rem;
-	}
-
-	.hero-register-cta {
-		position: absolute;
-		top: 50%;
-		right: 4rem;
-		transform: translateX(-290%) translateY(400%) rotate(-25deg);
-		padding: 1.1rem 2.4rem;
-		font-size: 1.2rem;
-	}
-
-	.hero-register-cta:hover,
-	.hero-register-cta:focus-visible {
-		background: #d07e48;
-		color: #28160a;
-		transform: translateX(-293%) translateY(405%) rotate(-23deg);
 	}
 }
 
