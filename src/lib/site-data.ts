@@ -2,6 +2,44 @@ import { base } from '$app/paths';
 
 const withBase = (path: string) => `${base}${path}`;
 
+type SocialLink = {
+	url: string;
+	label: string;
+};
+
+type DetailedLocation = {
+	venue: string;
+	street: string;
+	mapUrl: string;
+};
+
+type SessionTrainer = {
+	name: string;
+	social?: SocialLink;
+	photo?: string;
+};
+
+type Session = {
+	date: string;
+	time: string;
+	title: string;
+	description: string;
+	location?: DetailedLocation;
+	trainer?: string;
+	trainerSocial?: SocialLink;
+	trainerPhoto?: string;
+	sessionLogo?: string;
+	trainers?: SessionTrainer[];
+};
+
+type ScheduleDay = {
+	label: string;
+	title: string;
+	location: DetailedLocation;
+	summary: string;
+	sessions: Session[];
+};
+
 export const navItems: Array<{ label: string; href: `/#${string}` }> = [
 	{ label: 'Home', href: '/#home' },
 	{ label: 'About', href: '/#about' },
@@ -16,18 +54,19 @@ export const eventInfo = {
 	location: 'Brașov, Romania',
 	dateLabel: '17–21 November 2026',
 	countdownTarget: '2026-11-17T14:00:00+02:00',
+	endedAt: '2026-11-21T18:00:00+02:00',
 	description:
 		'A week-long educational event for and by students of Transilvania University. Join us for 12 training sessions over 5 days.'
 };
 
-export const zborHubLocation = {
+export const zborHubLocation: DetailedLocation = {
 	venue: 'Zbor Hub Brașov',
 	street: 'Str. Mureșenilor nr. 27',
 	mapUrl: 'https://maps.app.goo.gl/cqhtJJs9WPe4frdj6'
 };
 
 // training titles have to be distinct inside a session
-export const scheduleDays = [
+export const scheduleDays: ScheduleDay[] = [
 	{
 		label: '17.11.2026',
 		title: 'Day 1',
@@ -48,14 +87,15 @@ export const scheduleDays = [
 			{
 				date: '2026-11-17 12:00 Europe/Bucharest',
 				time: '16:00-18:00',
-				title: 'LEADERS Foundation ',
+				title: 'LEADERS Foundation - Energy Management',
 				description: 'You will discover how to improve the management of your physical and mental energy so that you can achieve your goals and face specific challenges.',
+				trainer: 'Sandu Adrian',
 				sessionLogo: withBase('/images/logos/LeadersFoundationSmall.png'),
 			},
 			{
 				date: '2026-11-17 12:00 Europe/Bucharest',
 				time: '18:00-20:00',
-				title: 'Radio Campus Transilvania',
+				title: 'Public Speaking',
 				description: 'An interactive training session about using your voice to communicate effectively, discover how to convey clear, powerful, and memorable ideas.',
 				location: zborHubLocation,
 				trainer: 'Constantinescu Sebastian',
@@ -74,39 +114,37 @@ export const scheduleDays = [
 			{
 				date: '2026-11-18 12:00 Europe/Bucharest',
 				time: '14:00-16:00',
-				title: 'BCR - Career School',
+				title: 'Career School',
 				description: 'In this interactive workshop, you will explore career options tailored to your interests, learn about essential skills for the job market, and receive practical tips for creating an attractive CV and acing your job interviews!',
 				location: zborHubLocation,
-				trainer: 'Andrada Ascate',
+				trainer: 'Andra Ascante',
 				trainerSocial: { url: '', label: 'Trainer social media' },
-				trainerPhoto:
-					''
+				trainerPhoto: withBase('/images/trainers/AndraAscante.png'),
+				sessionLogo: withBase('/images/logos/Sponsor2-BCR.webp')
 			},
 			{
 				date: '2026-11-18 12:00 Europe/Bucharest',
 				time: '16:00-18:00',
-				title: 'Essential Time Management',
-				description: 'Have you ever felt like you have run out of time? That important things get left to the last minute or cant even be finished on time? Whether your answer is yes or no, join us for a discussion on time management and prioritization.',
+				title: 'Time Management & Prioritization',
+				description: 'Have you ever felt like you have run out of time? That important things get left to the last minute or cant even be finished on time? Whether you relate or not, join us for a discussion on this very problem.',
 				location: zborHubLocation,
 				trainer: 'Ștefan Dima',
 				trainerSocial: { url: '', label: 'Trainer social media' },
-				trainerPhoto:
-					''
+				trainerPhoto: withBase('/images/trainers/StefanDima.png')
 			},
 			{
 				date: '2026-11-18 12:00 Europe/Bucharest',
 				time: '18:00-20:00',
-				title: 'Personal Branding Strategy',
+				title: 'Social Media & Personal Branding',
 				description: 'Social media isn\'t just about scrolling and posting. It can be the place where you build your personal brand, share your passion, and create opportunities.',
 				trainers: [
 					{
-						name: 'Claudia Stoica',
+						name: 'Claudia Stoica &',
 						social: {
 							url: 'https://www.linkedin.com/search/results/people/?keywords=Claudia%20Stoica',
 							label: 'Claudia Stoica LinkedIn search'
 						},
-						photo:
-							''
+						photo: withBase('/images/trainers/ClaudiaSiPatrictia.png')
 					},
 					{
 						name: 'Patricia Dorobanțu',
@@ -114,8 +152,7 @@ export const scheduleDays = [
 							url: 'https://www.linkedin.com/search/results/people/?keywords=Patricia%20Dorobantu',
 							label: 'Patricia Dorobanțu LinkedIn search'
 						},
-						photo:
-							''
+						photo: withBase('/images/trainers/ClaudiaSiPatrictia.png')
 					}
 				]
 			}
@@ -135,8 +172,7 @@ export const scheduleDays = [
 				location: zborHubLocation,
 				trainer: 'Amalia Popescu',
 				trainerSocial: { url: '', label: 'Trainer social media' },
-				trainerPhoto:
-					''
+				trainerPhoto: withBase('/images/trainers/AmaliaPopescu.png')
 			},
 			{
 				date: '2026-11-19 12:00 Europe/Bucharest',
@@ -146,7 +182,8 @@ export const scheduleDays = [
 				location: zborHubLocation,
 				trainer: 'Raluca Andreea Nedelcu',
 				trainerSocial: { url: '', label: 'Trainer social media' },
-				trainerPhoto: withBase('/images/trainers/AndreeaNedelcu.png')
+				trainerPhoto: withBase('/images/trainers/AndreeaNedelcu.png'),
+				sessionLogo: withBase('/images/logos/Nuclearelectrica.jpg')
 			}
 		]
 	},
@@ -159,24 +196,24 @@ export const scheduleDays = [
 			{
 				date: '2026-11-20 12:00 Europe/Bucharest',
 				time: '14:00-15:00',
-				title: 'BCR - Your Financial Health Starts Today',
-				description: 'A practical training session designed to help you manage your money better, make smart financial decisions, and stay safe from online fraud.',
+				title: 'Your Financial Health Starts Today',
+				description: 'A practical training session designed to help you manage your money better, make smart financial decisions, and stay safe from online fraud. Through real-life examples and easy-to-apply advice, you will learn how to build healthy financial habits for the future.',
 				location: zborHubLocation,
-				trainer: 'Andrada Ascate',
+				trainer: 'Andra Ascante',
 				trainerSocial: { url: '', label: 'Trainer social media' },
-				trainerPhoto:
-					''
+				trainerPhoto: withBase('/images/trainers/AndraAscante.png'),
+				sessionLogo: withBase('/images/logos/Sponsor2-BCR.webp')
 			},
 			{
 				date: '2026-11-20 12:00 Europe/Bucharest',
 				time: '16:00-18:00',
-				title: 'InnoEduLab',
-				description: 'In this interactive leadership workshop, we skip the cheesy motivational quotes and overcomplicated theories for two hours of practical exercises and honest conversations.',
+				title: 'Leadership & Self-Awareness',
+				description: 'Leader for others? Start with yourself: How well do you actually know yourself? In this interactive 𝐥𝐞𝐚𝐝𝐞𝐫𝐬𝐡𝐢𝐩 workshop, we skip the cheesy motivational quotes and overcomplicated theories for two hours of practical exercises and honest conversations. Discover why great leadership begins with 𝐬𝐞𝐥𝐟-𝐚𝐰𝐚𝐫𝐞𝐧𝐞𝐬𝐬, what truly drives you, and why "I\'ll just do it myself" isn\'t always a winning strategy. Get ready for practical insights and a few genuine "aha, so that\'s what I do" moments!',
 				location: zborHubLocation,
-				trainer: '',
+				trainer: 'Ancuța Duță',
 				trainerSocial: { url: '', label: 'Trainer social media' },
-				trainerPhoto:
-					''
+				trainerPhoto: withBase('/images/trainers/AncutaDuta.png'),
+				sessionLogo: withBase('/images/logos/InnoEduLab.png')
 			}
 		]
 	},
@@ -194,16 +231,17 @@ export const scheduleDays = [
 				location: zborHubLocation,
 				trainer: 'Rareș Soltuz',
 				trainerSocial: { url: '', label: 'Trainer social media' },
-				trainerPhoto: ''
+				trainerPhoto: withBase('/images/trainers/RaresSoltuz.png')
 			},
 			{
 				date: '2026-11-21 12:00 Europe/Bucharest',
 				time: '16:00-18:00',
 				title: 'How a simple idea can turn the world around',
-				description: 'This interactive workshop will immerse you in the power of advocacy. Learn the principles, develop your strategic thinking and turn your desire for change into an actual campaign!',
+				description: 'Ever wondered how a simple idea can turn the world around? This interactive workshop will immerse you in the power of advocacy. Learn the principles of advocacy, develop your strategic thinking and turn your desire for change into an actual advocacy campaign!',
 				location: zborHubLocation,
 				trainer: 'Ana Florea',
 				trainerSocial: { url: 'https://linktr.ee/zborhub.brasov', label: 'Zbor Hub Brasov linktree' },
+				trainerPhoto: withBase('/images/trainers/AnaFlorea.png'),
 				sessionLogo: withBase('/images/logos/Sponsor4-zbor.jpg')
 			}
 		]
@@ -309,7 +347,7 @@ export const organizers = [
 	{
 		name: 'Bianca Milea',
 		title: 'Participants Experience Responsible',
-		photo: withBase('/images/BESTies/BiancaPAX.webp')
+		photo: withBase('/images/BESTies/BiancaPax.jpg')
 	},
 	{
 		name: 'Miruna Ungureanu',

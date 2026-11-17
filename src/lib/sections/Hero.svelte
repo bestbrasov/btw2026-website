@@ -16,9 +16,15 @@
 
 	interface Props {
 		LeafSceneComponent?: Component | null;
+		registerNowUrl: string;
+		eventEnded: boolean;
 	}
 
-	let { LeafSceneComponent: ExternalLeafScene = null }: Props = $props();
+	let {
+		LeafSceneComponent: ExternalLeafScene = null,
+		registerNowUrl,
+		eventEnded
+	}: Props = $props();
 
 	// Flip calculation helpers
 	const flipKeyOrder: FlipKey[] = ['d0', 'd1', 'h0', 'h1', 'm0', 'm1', 's0', 's1'];
@@ -66,17 +72,34 @@
 
 	// Target calculation setup
 	const eventStartDate = new Date(eventInfo.countdownTarget);
+
+	function getSessionStartDate(session: { date: string; time: string }) {
+		const datePart = session.date.split(' ')[0];
+		const startTime = session.time.match(/^(\d{1,2}:\d{2})/)?.[1];
+
+		if (datePart && startTime) {
+			const parsedFromSlot = new Date(`${datePart}T${startTime}:00+02:00`);
+			if (!Number.isNaN(parsedFromSlot.getTime())) {
+				return parsedFromSlot;
+			}
+		}
+
+		return new Date(session.date.replace(' Europe/Bucharest', '+02:00').replace(' ', 'T'));
+	}
+
 	const sessionTargets = scheduleDays
 		.flatMap((day) => day.sessions.map((session) => ({ session, day })))
 		.map(({ session, day }) => ({
 			...session,
-			date: new Date(session.date.replace(' Europe/Bucharest', '+02:00').replace(' ', 'T')),
+			date: getSessionStartDate(session),
 			dayLabel: day.label
 		}))
 		.filter((session) => !Number.isNaN(session.date.getTime()))
 		.sort((a, b) => a.date.getTime() - b.date.getTime());
 
 	function updateCountdown() {
+		if (eventEnded) return;
+
 		const now = Date.now();
 		const nextSession =
 			now >= eventStartDate.getTime()
@@ -212,30 +235,39 @@
 		<div class="hero-home-copy">
 			<div class="hero-title-stack">
 				<h1 class="hero-event-title">
-					{#if countdownTitle === 'BEST TRAINING WEEK'}
+					{#if eventEnded}
+						<span class="hero-event-title-line">BEST TRAINING WEEK</span>
+					{:else if countdownTitle === 'BEST TRAINING WEEK'}
 						<span class="hero-event-title-line hero-event-title-line--first">BEST</span>
 						<span class="hero-event-title-line">TRAINING WEEK</span>
 					{:else}
 						{countdownTitle}
 					{/if}
 				</h1>
+				{#if eventEnded}
+					<p class="hero-ended-message">HAS ENDED<br />THANK YOU FOR TAKING PART</p>
+				{/if}
 			</div>
 
-			<div class="hero-countdown-stack">
-				<p class="hero-event-date">{countdownDateLabel}</p>
-				<FlipCountdown {flipDigits} {prevFlipDigits} {flipVersions} />
-			</div>
+			{#if !eventEnded}
+				<div class="hero-countdown-stack">
+					<p class="hero-event-date">{countdownDateLabel}</p>
+					<FlipCountdown {flipDigits} {prevFlipDigits} {flipVersions} />
+				</div>
+			{/if}
 
 			<p class="hero-short-description">{eventInfo.description}</p>
 
-			<a
-				href="https://forms.gle/hMiMbmR2CFPUCUrh8"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="hero-register-cta"
-			>
-				Register now
-			</a>
+			{#if !eventEnded}
+				<a
+					href={registerNowUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hero-register-cta"
+				>
+					Register now
+				</a>
+			{/if}
 		</div>
 		<div class="hero-tree-spacer" aria-hidden="true"></div>
 	</div>
